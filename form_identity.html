@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>registre</title>
+    <link rel="stylesheet" href="sheet2.css">
+</head>
+<body>
+    <div class="registre">
+    <form action="bd_identity.php" method="post" onsubmit="return valid()">
+        <img src="2415069.png" class="img" alt="" srcset="">
+        <h1>Enter your identity</h1>
+        <p class="entree">
+            <input type="email" required placeholder="Mobile number or email" name="email" id="email">
+        </p>
+        <p class="entree">
+            <input type="password" placeholder="Password" required name="mdp" id="pass">
+        </p>
+        <p class="entree">
+            <input type="submit" name="Souscription" class="submit" value="Souscription">
+        </p>
+        <p>Mot de passe oublié?</p>
+        <button type="submit" class="other_sub" name="Creation">Créer un compte</button>
+    </form>
+</div>
+    <script>
+        function valid(){
+            // les éléments du formulaire
+            const email=document.getElementById("email").value;
+            const pass=document.getElementById("pass").value;
+            // le remplissage des champs
+            if(email==='' || pass==='' ){
+                alert("Veuillez remplir les champs.");
+                return false;
+                // annule l'envoi du formulaire
+            }else if(email===''){
+                alert("L'email est vide.");
+                return false;
+                // annule l'envoi du formulaire
+            }else if( pass==='' ){
+                alert("le mot de passe est vide.");
+                return false;
+                // annule l'envoi du formulaire
+            }
+            // envoyer vers une autre page
+            window.location.href='file:///C:/Users/Luthres%20Auriane/Desktop/second_project/boutton.html';
+            return false;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image</title>
+    <style>
+        #image{
+            margin-top: 10px;
+            max-width: 100%;
+            max-height: 400px;
+            display: none;
+            /* fichier caché */
+        }
+        #sub{
+            font-size: 18px;
+            color: blue;
+            margin: 5px 3px;
+            border-radius: 8px;
+            padding: 7px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Choix d'image</h1>
+        <p>Choisissez une image:</p>
+        <form action="bd_image.php" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" id="fileinp" required accept="image/*">
+        <img id="image" alt=""><br>
+        <input type="submit" id="sub" value="Selectionner" name="Selectionner">
+    </form>
+        <script>
+            alert("Veuillez selectionner une image");
+        document.getElementById('fileinp').addEventListener('change', function(event){
+                const file = event.target.files[0];
+                const image=document.getElementById('image');
+                if(file) {
+                    const read = new FileReader();
+                    read.onload = function(e) {
+                        image.src = e.target.result;
+                        image.style.display='block';
+                        // affichage de l'image
+                    };
+                    read.readAsDataURL(file);
+                }else{
+                    image.src='';
+                    image.style.display='none';
+                    // la non selection de l'image n'affiche rien
+                }
+            });
+        </script>
+</body>
+</html>

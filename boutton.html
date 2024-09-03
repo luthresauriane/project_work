@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutton</title>
+</head>
+<body>
+    <form onsubmit="return page()" action="bd_boutton.php" method="post">
+    <p>
+        <button type="submit">Cliquer ici</a></button>
+    </p>
+</form>
+<script>
+    function page(){
+        window.location.href='file:///C:/Users/Luthres%20Auriane/Desktop/second_project/lien_image.html';
+        return false;
+    }
+</script>
+<style>
+    body{
+        background-color: blueviolet;
+         margin: 200px;
+        padding: 40px; 
+        text-align: center;
+    }
+    button:hover{
+        background-color:rgb(189, 236, 171) ;
+    }
+    button{
+        transition: all 0.4s ease;
+        background-color: rgb(146, 233, 112);
+        color: rgb(71, 37, 153);
+        font-size: 40px;
+        border: 2px groove rgb(243, 245, 132);
+        border-radius: 15px;
+    }
+</style>
+</body>
+</html>
