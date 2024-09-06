@@ -1,30 +1,48 @@
 <?php
-// $servername='mysql:host=localhost;dbname=bd_project';
-// $username="root";
-// $password="";
-//     $connect = new mysqli($servername, $username, $password);
-//     if($connect->connect_error){
-//         die ("Connection echouée " . $connect->connect_error);
-//     }
-include 'bd_to_connection.php';
-if(isset($_FILES['image']) && $_FILES['image']['error']==0){
-    // recuperons les informations de l'image
-    $image = $_FILES['image']['tmp_name'];
-    // lecture du contenu
-    $data_image = $_POST['image'];
-    $data_image = file_get_contents($image);
-    // la preparation de la requete
-    $stmt = $connect->prepare( "INSERT INTO `project_img`(`data_image`) VALUES (:data)");
-    $stmt->bindParam("ssis", $data_image);
-    if($stmt->execute()){
-        echo "Image sauvegardée";
-    }else{
-        echo "ERREUR : " . $stmt->error;
+// Configuration de la base de données
+$host = 'localhost';  // Changer selon votre configuration
+$dbname = 'bd_file_try_again';
+$user = 'root';
+$pass = '';
+
+// Connexion à la base de données
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Erreur de connexion : " . $e->getMessage());
+}
+
+// Vérifier si un fichier a été soumis
+if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
+    $imageTmpPath = $_FILES['image']['tmp_name'];
+    $imageName = $_FILES['image']['name'];
+    $imageSize = $_FILES['image']['size'];
+    $imageType = $_FILES['image']['type'];
+    
+    // Définir le répertoire de destination
+    $uploadDir = 'uploads/';
+    $uploadFile = $uploadDir . basename($imageName);
+    
+    // Vérifier si le répertoire existe sinon le créer
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0777, true);
     }
-    // fermeture
-    $stmt->close();
-}else{
-    echo "Aucun fichier téléchargé"; 
- }
-$connect->close();
-    ?>
+    
+    // Déplacer le fichier téléchargé dans le répertoire de destination
+    if (move_uploaded_file($imageTmpPath, $uploadFile)) {
+        // Préparer la requête SQL pour insérer les informations de l'image dans la base de données
+        $stmt = $pdo->prepare("INSERT INTO imagesstock (filename, filetype, filesize) VALUES (:filename, :filetype, :filesize)");
+        $stmt->execute([
+            ':filename' => $imageName,
+            ':filetype' => $imageType,
+            ':filesize' => $imageSize
+        ]);
+        echo "L'image a été sauvegardé avec succès.";
+    } else {
+        echo "Erreur lors du téléchargement de l'image.";
+    }
+} else {
+    echo "Aucun fichier téléchargé ou erreur lors du téléchargement.";
+}
+?>
