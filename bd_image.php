@@ -1,11 +1,11 @@
 <?php
-// Configuration de la base de données
+// paramètre de la base de données
 $host = 'localhost';  // Changer selon votre configuration
 $dbname = 'bd_file_try_again';
 $user = 'root';
 $pass = '';
 
-// Connexion à la base de données
+// Connexion à la bd
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -20,7 +20,7 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] == UPLOAD_ERR_OK) {
     $imageSize = $_FILES['image']['size'];
     $imageType = $_FILES['image']['type'];
     
-    // Définir le répertoire de destination
+    // Définition du répertoire de destination
     $uploadDir = 'uploads/';
     $uploadFile = $uploadDir . basename($imageName);
     
